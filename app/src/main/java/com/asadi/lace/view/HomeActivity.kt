@@ -6,37 +6,42 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.VolleyError
-import com.asadi.lace.R
 import com.asadi.lace.adapters.HomeAdapter
 import com.asadi.lace.contracts.HomeContract
+import com.asadi.lace.databinding.ActivityHomeBinding
 import com.asadi.lace.model.HomeModel
 import com.asadi.lace.presenter.HomePresenter
 
 class HomeActivity : AppCompatActivity(), HomeContract.View {
 
-    lateinit var recycler: RecyclerView
-    lateinit var model: HomeContract.Model
-    lateinit var presenter: HomeContract.Presenter
+    private lateinit var bind: ActivityHomeBinding
+    private lateinit var model: HomeContract.Model
+    private lateinit var presenter: HomeContract.Presenter
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home)
+        bind = ActivityHomeBinding.inflate(layoutInflater)
+        setContentView(bind.root)
+
+        //Construct with inversion
         model = HomeModel(applicationContext)
         presenter = HomePresenter(this, model)
-        recycler = findViewById(R.id.recyclerView)
 
+
+        //Starting Point
         presenter.loadRecyclerView()
     }
 
     override fun initRecycler() {
 
-        recycler.layoutManager = LinearLayoutManager(
+        bind.recyclerView.layoutManager = LinearLayoutManager(
             this,
             RecyclerView.VERTICAL,
             false
         )
-        recycler.adapter = HomeAdapter(presenter)
+        //sets new HomeAdapter to RecyclerAdapter
+        bind.recyclerView.adapter = HomeAdapter(presenter)
     }
 
     override fun toastError(error: VolleyError) {

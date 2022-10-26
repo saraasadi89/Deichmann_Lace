@@ -1,7 +1,5 @@
 package com.asadi.lace.contracts
 
-import android.content.Context
-import android.icu.text.CaseMap
 import com.android.volley.VolleyError
 import com.asadi.lace.dataClasses.Product
 
@@ -12,7 +10,7 @@ interface DetailContract {
         fun setTitle(title:String)
         fun setPrice(price :String)
         fun setDescription(description:String)
-        fun setSlider(urls:HashMap<String,String>)
+        fun setSlider(urls:List<String>)
         fun showError(error: VolleyError)
 
     }

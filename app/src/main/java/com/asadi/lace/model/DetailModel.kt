@@ -5,10 +5,8 @@ import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.asadi.lace.contracts.DetailContract
-import com.asadi.lace.contracts.HomeContract
 import com.asadi.lace.dataClasses.Product
 import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import org.json.JSONObject
 
 class DetailModel (
@@ -18,13 +16,14 @@ class DetailModel (
 
     override fun setOnProductReceived(id:Int,onProductReceived: DetailContract.Model.OnProductReceived) {
 
-
+        //create new request line
         val queue = Volley.newRequestQueue(context)
         val url = "https://dummyjson.com/products/$id"
 
-        // Request a string response from the provided URL.
+        // Request a string
         val stringRequest = StringRequest(
             Request.Method.GET, url,
+            //gets string request and converts into product
             { response ->
                 val obj = JSONObject(response).toString()
                 val gson = Gson()

@@ -5,11 +5,14 @@ import com.asadi.lace.contracts.DetailContract
 import com.asadi.lace.dataClasses.Product
 
 class DetailPresenter(
+    //DetailPresenter constructor parameters
     private val view:DetailContract.View,
     private val model:DetailContract.Model
 ) :DetailContract.Presenter{
 
 lateinit var data:Product
+
+
     override fun showTitleData() {
        view.setTitle(data.title)
     }
@@ -23,16 +26,15 @@ lateinit var data:Product
     }
 
     override fun showSliderData() {
-        val url_maps = HashMap<String, String>()
-       for(i in data.images)
-           url_maps[i]=i
-        view.setSlider(url_maps)
+        view.setSlider(data.images)
 
     }
 
     override fun loadData(id:Int) {
+        //calls model method to load data
         model.setOnProductReceived(id,object :DetailContract.Model.OnProductReceived{
             override fun onSuccess(product: Product) {
+                //save data in presenter
                 data=product
                 showTitleData()
                 showPriceData()
